@@ -3,11 +3,11 @@ using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistemaVentaBlazor.Server.Models;
-using SistemaVentaBlazor.Server.Repositorio.Contrato;
-using SistemaVentaBlazor.Shared;
+using FerreteriaSur.Server.Models;
+using FerreteriaSur.Server.Repositorio.Contrato;
+using FerreteriaSur.Shared;
 
-namespace SistemaVentaBlazor.Server.Controllers
+namespace FerreteriaSur.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
