@@ -44,6 +44,18 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "ChartJs.Blazor.Fork": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.100.3, )"
+            },
+            "CurrieTechnologies.Razor.SweetAlert2": {
+              "target": "Package",
+              "version": "[5.5.0, )"
+            },
             "Microsoft.AspNetCore.Components.WebAssembly": {
               "target": "Package",
               "version": "[7.0.1, )"
@@ -52,6 +64,14 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.1, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
