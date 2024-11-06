@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\LoginLayout.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
@@ -18,6 +22,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\FerreteriaSur.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\LoginLayout.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\LoginLayout.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\LoginLayout.razor" />
   </ItemGroup>
 
 </Project>
