@@ -41,7 +41,7 @@ namespace FerreteriaSur.Server.Utilidades
             CreateMap<Producto, ProductoDTO>()
             .ForMember(destino =>
                 destino.DescripcionCategoria,
-                opt => opt.MapFrom(origen => origen.IdCategoriaNavigation.Descripcion)
+                opt => opt.MapFrom(origen => origen.IdCategoriaNavigation.NombreCategoria)
             );
             //.ForMember(destino =>
             //    destino.Precio,

@@ -14,5 +14,12 @@ namespace FerreteriaSur.Shared
         public string? DescripcionCategoria { get; set; }
         public int? Stock { get; set; }
         public decimal? Precio { get; set; }
+        public string? Caracteristicas { get; set; }  // Nuevo campo
+        public string? Detalle { get; set; }  // Nuevo campo
+        public int? StockMinimo { get; set; }  // Nuevo campo
+        public decimal? Ganancia { get; set; }  // Nuevo campo
+        public decimal? PrecioCompra { get; set; }  // Nuevo campo
+        public decimal? PrecioVenta { get; set; }  // Nuevo campo
+        public int? IdUnidad { get; set; }  // Nuevo campo
     }
 }

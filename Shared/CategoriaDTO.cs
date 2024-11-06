@@ -9,7 +9,7 @@ namespace FerreteriaSur.Shared
     public class CategoriaDTO
     {
         public int IdCategoria { get; set; }
-        public string? Descripcion { get; set; }
+        public string? NombreCategoria { get; set; }
 
         public override bool Equals(object o)
         {
@@ -19,7 +19,7 @@ namespace FerreteriaSur.Shared
         public override int GetHashCode() => IdCategoria.GetHashCode();
         public override string ToString()
         {
-            return Descripcion;
+            return NombreCategoria;
         }
     }
 }

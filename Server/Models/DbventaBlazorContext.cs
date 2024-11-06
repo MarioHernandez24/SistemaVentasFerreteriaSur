@@ -28,6 +28,7 @@ public partial class DbventaBlazorContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<Venta> Venta { get; set; }
+    public virtual DbSet<UnidadMedida> UnidadMedidas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
@@ -38,10 +39,10 @@ public partial class DbventaBlazorContext : DbContext
             entity.HasKey(e => e.IdCategoria).HasName("PK__Categori__8A3D240C1FC10DD9");
 
             entity.Property(e => e.IdCategoria).HasColumnName("idCategoria");
-            entity.Property(e => e.Descripcion)
+            entity.Property(e => e.NombreCategoria)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("descripcion");
+                .HasColumnName("nombreCategoria");
             entity.Property(e => e.EsActivo).HasColumnName("esActivo");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
@@ -109,10 +110,42 @@ public partial class DbventaBlazorContext : DbContext
                 .HasColumnName("precio");
             entity.Property(e => e.Stock).HasColumnName("stock");
 
-            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Productos)
+            // Nuevas propiedades
+            entity.Property(e => e.Caracteristicas)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("caracteristicas");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("detalle");
+            entity.Property(e => e.StockMinimo)
+                .HasColumnType("int")
+                .HasColumnName("stockMinimo");
+            entity.Property(e => e.Ganancia)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("ganancia");
+            entity.Property(e => e.PrecioCompra)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("precioCompra");
+            entity.Property(e => e.PrecioVenta)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("precioVenta");
+            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
+
+            // Relación con la entidad UnidadMedida (si existe la relación)
+            entity.HasOne(d => d.IdUnidadMedidaNavigation)
+                .WithMany(p => p.Productos)
+                .HasForeignKey(d => d.IdUnidad)
+                .HasConstraintName("FK__Producto__idUnid__1A1661C3");
+
+            // Relación con la entidad Categoria (ya estaba)
+            entity.HasOne(d => d.IdCategoriaNavigation)
+                .WithMany(p => p.Productos)
                 .HasForeignKey(d => d.IdCategoria)
                 .HasConstraintName("FK__Producto__idCate__1920BF5C");
         });
+
 
         modelBuilder.Entity<Rol>(entity =>
         {
@@ -180,6 +213,34 @@ public partial class DbventaBlazorContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");
         });
+
+        modelBuilder.Entity<UnidadMedida>(entity =>
+        {
+            entity.HasKey(e => e.IdUnidad).HasName("PK__UnidadMe__C86B1F2A9D4A535D");
+
+            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
+            entity.Property(e => e.NombreUnidad)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nombreUnidad");
+            entity.Property(e => e.Simbolo)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("simbolo");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.TipoUnidad)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("tipoUnidad");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaCreacion");
+        });
+
 
         OnModelCreatingPartial(modelBuilder);
     }
