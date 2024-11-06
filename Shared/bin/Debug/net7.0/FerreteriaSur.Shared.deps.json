@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "FerreteriaSur.Shared/1.0.0": {
+        "runtime": {
+          "FerreteriaSur.Shared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FerreteriaSur.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

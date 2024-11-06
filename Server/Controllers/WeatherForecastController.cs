@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using SistemaVentaBlazor.Shared;
+using FerreteriaSur.Shared;
 
-namespace SistemaVentaBlazor.Server.Controllers
+namespace FerreteriaSur.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

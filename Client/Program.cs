@@ -5,7 +5,6 @@ using FerreteriaSur.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using FerreteriaSur.Client;
 using FerreteriaSur.Client.Servicios.Implementacion;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

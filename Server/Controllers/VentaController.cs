@@ -28,8 +28,8 @@ namespace FerreteriaSur.Server.Controllers
         public async Task<IActionResult> Registrar([FromBody] VentaDTO request)
         {
             ResponseDTO<VentaDTO> _ResponseDTO = new ResponseDTO<VentaDTO>();
-            try
-            {
+            //try
+            //{
 
                 Venta venta_creada = await _ventaRepositorio.Registrar(_mapper.Map<Venta>(request));
                 request = _mapper.Map<VentaDTO>(venta_creada);
@@ -40,12 +40,12 @@ namespace FerreteriaSur.Server.Controllers
                     _ResponseDTO = new ResponseDTO<VentaDTO>() { status = false, msg = "No se pudo registrar la venta" };
 
                 return StatusCode(StatusCodes.Status200OK, _ResponseDTO);
-            }
-            catch (Exception ex)
-            {
-                _ResponseDTO = new ResponseDTO<VentaDTO>() { status = false, msg = ex.Message };
-                return StatusCode(StatusCodes.Status500InternalServerError, _ResponseDTO);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _ResponseDTO = new ResponseDTO<VentaDTO>() { status = false, msg = ex.Message };
+            //    return StatusCode(StatusCodes.Status500InternalServerError, _ResponseDTO);
+            //}
         }
 
         [HttpGet]
