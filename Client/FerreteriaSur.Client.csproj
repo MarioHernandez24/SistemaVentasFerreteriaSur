@@ -33,6 +33,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Autorizacion\Login.razor" />
+    <None Include="Pages\DashBoard.razor" />
+    <None Include="Pages\HistorialVenta.razor" />
+    <None Include="Pages\Modales\MdDetalleVenta.razor" />
+    <None Include="Pages\Modales\MdProducto.razor" />
+    <None Include="Pages\Modales\MdUsuario.razor" />
+    <None Include="Pages\Producto.razor" />
+    <None Include="Pages\Reporte.razor" />
+    <None Include="Pages\Usuario.razor" />
+    <None Include="Pages\Venta.razor" />
     <None Include="Shared\LoginLayout.razor" />
   </ItemGroup>
 
