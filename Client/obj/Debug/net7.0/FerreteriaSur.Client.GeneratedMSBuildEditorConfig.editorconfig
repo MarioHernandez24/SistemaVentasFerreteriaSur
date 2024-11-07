@@ -24,6 +24,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0b3JpemFjaW9uXExvZ2luLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/Categoria.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcmlhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/DashBoard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaEJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

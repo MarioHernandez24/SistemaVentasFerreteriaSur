@@ -1,0 +1,151 @@
+﻿@page "/page/categoria"
+@inject ICategoriaService _categoriaServicio
+@inject IDialogService _dialogServicio
+@inject ISnackbar _snackBar
+@inject SweetAlertService Swal;
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-5">
+
+    <MudText Typo="Typo.h5" GutterBottom="true">Categorias</MudText>
+
+    <MudPaper Elevation="3" Class="pa-4" Width="100%">
+        <MudGrid>
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Add"
+                           Color="Color.Primary"
+                           OnClick="AbrirNuevaCategoria">
+                    Nueva categoria
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12">
+
+                <MudTable Items="@listaCategoria"
+                          Striped="true" Bordered="true" Dense="true"
+                          Filter="new Func<CategoriaDTO,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1"
+                          Loading="@_loading" LoadingProgressColor="Color.Info">
+                    <ToolBarContent>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>                        
+                        <MudTh>Fecha registro</MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="categoriaRow">
+                        <MudTd DataLabel="Nombre">@categoriaRow.NombreCategoria</MudTd>                        
+                        <MudTd DataLabel="Fecha registro">@categoriaRow.FechaRegistro?.ToString("d")</MudTd>
+
+                        <MudTd DataLabel="">
+                            <MudFab Color="Color.Primary"
+                                    StartIcon="@Icons.Material.Filled.Edit"
+                                    Size="Size.Small"
+                                    IconSize="Size.Small"
+                                    OnClick="@(() => AbrirEditarCategoria(categoriaRow))" />
+                            @*<MudFab Color="Color.Error"
+                                    StartIcon="@Icons.Material.Filled.Delete"
+                                    Size="Size.Small"
+                                    IconSize="Size.Small"
+                                    OnClick="@(() => EliminarUsuario(categoriaRow))" />*@
+                        </MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+
+
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    List<CategoriaDTO> listaCategoria = new List<CategoriaDTO>();
+    private string searchString1 = "";
+    private CategoriaDTO selectedItem1 = null;
+    private bool _loading = true;
+
+    private async Task ObtenerCategorias()
+    {
+        var result = await _categoriaServicio.Lista();
+
+        if (result.status)
+        {
+            listaCategoria = (List<CategoriaDTO>)result.value!;
+        }
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ObtenerCategorias();
+        _loading = false;
+    }
+
+    private bool FilterFunc1(CategoriaDTO element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(CategoriaDTO element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.NombreCategoria.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;       
+
+        return false;
+    }
+
+    private async Task AbrirNuevaCategoria()
+    {
+        var dialogo = _dialogServicio.Show<MdProducto>("Nueva categoria");
+        var resultado = await dialogo.Result;
+
+        if (!resultado.Canceled)
+        {
+            await ObtenerCategorias();
+        }
+    }
+
+    private async Task AbrirEditarCategoria(CategoriaDTO model)
+    {
+        var parametros = new DialogParameters { ["_categoria"] = model };
+
+        var dialogo = _dialogServicio.Show<MdProducto>("Editar categoria", parametros);
+        var resultado = await dialogo.Result;
+
+        if (!resultado.Canceled)
+        {
+            await ObtenerCategorias();
+        }
+    }
+
+    //private async Task EliminarUsuario(CategoriaDTO model)
+    //{
+    //    SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
+    //        {
+    //            Title = "Esta seguro?",
+    //            Text = $"Eliminar categoria: {model.NombreCategoria}",
+    //            Icon = SweetAlertIcon.Warning,
+    //            ShowCancelButton = true,
+    //            ConfirmButtonText = "Si, eliminar",
+    //            CancelButtonText = "No, volver"
+    //        });
+
+    //    if (result.IsConfirmed)
+    //    {
+    //        var resultado = await _categoriaServicio.Eliminar(model.IdProducto);
+
+    //        if (resultado)
+    //        {
+    //            _snackBar.Add("El producto fue eliminado", Severity.Success, a => a.VisibleStateDuration = 500);
+    //            await ObtenerCategorias();
+    //        }
+    //        else
+    //            _snackBar.Add("No se pudo eliminar", Severity.Error, a => a.VisibleStateDuration = 500);
+    //    }
+    //}
+
+}

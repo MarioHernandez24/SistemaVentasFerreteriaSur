@@ -11,6 +11,8 @@ namespace FerreteriaSur.Shared
         public int IdCategoria { get; set; }
         public string? NombreCategoria { get; set; }
 
+        public DateTime? FechaRegistro { get; set; }
+
         public override bool Equals(object o)
         {
             var other = o as CategoriaDTO;
