@@ -129,6 +129,12 @@ public partial class DbventaBlazorContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("ganancia");
 
+            //entity.Property(e => e.Ganancia)
+            //.HasColumnType("decimal(10, 2)")
+            //.HasColumnName("ganancia")
+            //.HasComputedColumnSql("[precio] - [precioCompra]");
+
+
             entity.Property(e => e.PrecioCompra)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("precioCompra");

@@ -53,6 +53,8 @@ namespace FerreteriaSur.Server.Utilidades
                 destino.IdCategoriaNavigation,
                 opt => opt.Ignore()
             );
+         
+
             //.ForMember(destiono =>
             //    destiono.Precio,
             //    opt => opt.MapFrom(origen => Convert.ToDecimal(origen.Precio, new CultureInfo("es-PE")))

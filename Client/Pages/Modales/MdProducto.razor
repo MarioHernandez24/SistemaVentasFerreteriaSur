@@ -25,22 +25,25 @@
                 </MudSelect>
 
                 <MudNumericField @bind-Value="@_producto.Stock" Class="mb-3"
-                              Label="Stock" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QrCode" />
+                                 Label="Stock" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QrCode" />
+
 
                 <MudNumericField @bind-Value="@_producto.StockMinimo" Class="mb-3"
                                  Label="Stock mínimo" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.StopCircle" />
 
-                <MudNumericField @bind-Value="@_producto.PrecioVenta" Class="mb-3"
-                                 Label="Precio compra" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Money" />
+
+                <MudNumericField @bind-Value="@_producto.PrecioCompra" Class="mb-3"
+                                 Label="Precio compra" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Money" oninput="RecalcularGanancia()" />
 
                 <MudNumericField @bind-Value="@_producto.Precio" Class="mb-3"
-                              Label="Precio" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Money" />  
-                              
+                                 Label="Precio" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Money" oninput="RecalcularGanancia()" />
+
                 <MudNumericField @bind-Value="@_producto.Ganancia" Class="mb-3"
-                                 Label="Ganancia" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Money" />
+                                 Label="Ganancia" Variant="Variant.Outlined" Adornment="Adornment.End"
+                                 AdornmentIcon="@Icons.Material.Filled.Money" Disabled />
 
                 <MudTextField @ref="multilineReference" T="string" Label="Características" Lines="3" Variant="Variant.Outlined" @bind-Value="@_producto.Caracteristicas" Adornment="Adornment.End"
-                AdornmentIcon="@Icons.Material.Filled.Api" OnAdornmentClick="@(() => multilineReference.SelectAsync())" />
+                              AdornmentIcon="@Icons.Material.Filled.Api" OnAdornmentClick="@(() => multilineReference.SelectAsync())" />
 
                 <MudTextField @ref="multilineReference" T="string" Label="Detalles" Lines="3" Variant="Variant.Outlined" @bind-Value="@_producto.Detalle" Adornment="Adornment.End"
                               AdornmentIcon="@Icons.Material.Filled.Api" OnAdornmentClick="@(() => multilineReference.SelectAsync())" />
@@ -67,10 +70,20 @@
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
+    private void RecalcularGanancia()
+    {
+        if (_producto.Precio > 0 && _producto.PrecioCompra > 0)
+        {
+            _producto.Ganancia = _producto.Precio - _producto.PrecioCompra;
+        }
+        else
+        {
+            _producto.Ganancia = 0;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
-
         var resultado = await _categoriaServicio.Lista();
 
         if (resultado.status)
@@ -80,20 +93,26 @@
                 categoriaSeleccionado = listaCategoria.FirstOrDefault(p => p.IdCategoria == _producto.IdCategoria)!;
             else
                 categoriaSeleccionado = listaCategoria.First();
-
-
         }
+        // No es necesario llamar a CalcularGanancia aquí, ya que RecalcularGanancia se llama directamente en el oninput.
     }
 
     private void Cancel()
     {
         MudDialog.Cancel();
     }
+
     private async Task Guardar()
     {
         _producto.IdCategoria = categoriaSeleccionado.IdCategoria;
         string _mensaje = "";
         bool _resultado;
+
+        // Recalcular la ganancia justo antes de guardar
+        RecalcularGanancia();
+
+        // Verificar que la ganancia se calcule correctamente en el frontend
+        Console.WriteLine($"Ganancia calculada: {_producto.Ganancia} (Precio: {_producto.Precio} - PrecioCompra: {_producto.PrecioCompra})");
 
         if (_producto.IdProducto != 0)
         {
@@ -113,7 +132,8 @@
             MudDialog.Close(DialogResult.Ok(true));
         }
         else
+        {
             _snackBar.Add("Error al guardar cambios", Severity.Error, a => a.VisibleStateDuration = 500);
-
+        }
     }
 }

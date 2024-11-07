@@ -25,7 +25,7 @@ public partial class Producto
     public decimal? Ganancia { get; set; }  // Nuevo campo
     public decimal? PrecioCompra { get; set; }  // Nuevo campo
     public decimal? PrecioVenta { get; set; }  // Nuevo campo
-    public int? IdUnidad { get; set; }  // Nuevo campo
+    public int? IdUnidad { get; set; }  // Nuevo campo    
 
     public virtual ICollection<DetalleVenta> DetalleVenta { get; } = new List<DetalleVenta>();
 

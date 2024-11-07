@@ -209,15 +209,15 @@
       "mscorlib.dll": "sha256-UH9jptJH1wZ3XMBPuMMAEaUKpfRxc5AgXkLdAFAvNVE=",
       "netstandard.dll": "sha256-+jUzj0FB0YcoBUeSkSNEjhVDTG08qbZ2twfCBMbzT+Q=",
       "System.Private.CoreLib.dll": "sha256-l+\/quNqfNCSUDSMJcp0+IxlSdOdnAtwVVWMXmYGHMpg=",
-      "FerreteriaSur.Shared.dll": "sha256-gPQq5rvVUcW712l33s5oeNswCKk8FWuqZtH1Mc\/ggCk=",
-      "FerreteriaSur.Client.dll": "sha256-qUpmgOErnZQ4HIqHbbvUc9CC0GxUmuA\/iEa1qGF25fM="
+      "FerreteriaSur.Shared.dll": "sha256-jfhPiF4cMWqaG4Y7o6HzE0IolmUmh3Dvi5PCkuqrLPA=",
+      "FerreteriaSur.Client.dll": "sha256-we3Sq9BCAiKYpP2s0yRmnklptr2cud0LPSej9u3Uv\/o="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "FerreteriaSur.Shared.pdb": "sha256-Twzso3ii1WNyK88Nh3hilFmshVMbjYedEWIZSQudgV8=",
-      "FerreteriaSur.Client.pdb": "sha256-cEpnegK2czT+Eny+yiePka26VwRxfJPRhEv2s5BZosk="
+      "FerreteriaSur.Shared.pdb": "sha256-ILCYQ2XwbVY2\/zQ+jkQyK1XeTp2yYiLMVTyp3uTIxIg=",
+      "FerreteriaSur.Client.pdb": "sha256-EOQJ+zcYOEgrTBWbt0nrp\/i2tmnIq4Gbb53h9oAj0hw="
     },
     "runtime": {
       "dotnet.7.0.1.2oe5g2ms40.js": "sha256-jjax3FMRXzFAziWowdtJf6vipP2xXAaA5gD6VBYB6Y0=",
