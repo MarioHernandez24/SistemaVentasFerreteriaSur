@@ -95,7 +95,8 @@ public partial class DbventaBlazorContext : DbContext
             entity.ToTable("Producto");
 
             entity.Property(e => e.IdProducto).HasColumnName("idProducto");
-            entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+            entity.Property(e => e.EsActivo).HasColumnName("esActivo")
+            .HasDefaultValue(true);
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
