@@ -47,6 +47,8 @@
 
                 <MudTextField @ref="multilineReference" T="string" Label="Detalles" Lines="3" Variant="Variant.Outlined" @bind-Value="@_producto.Detalle" Adornment="Adornment.End"
                               AdornmentIcon="@Icons.Material.Filled.Api" OnAdornmentClick="@(() => multilineReference.SelectAsync())" />
+
+               @* <input type="checkbox" @bind-value="@_producto.EsActivo"/>*@
             </EditForm>
 
         </MudContainer>

@@ -32,18 +32,24 @@
                         <MudTh>Nombre</MudTh>
                         <MudTh>Categoria</MudTh>
                         <MudTh>Stock</MudTh>
-                        <MudTh>Precio</MudTh>
+                        <MudTh>Precio compra</MudTh>
                         <MudTh>Precio Venta</MudTh>
                         <MudTh>Ganancia</MudTh> 
+                        <MudTh>Características</MudTh>
+                        <MudTh>Detalles</MudTh>  
+                        <MudTh>Stock mínimo</MudTh>
                         <MudTh></MudTh>
                     </HeaderContent>
                     <RowTemplate Context="productoRow">
                         <MudTd DataLabel="Nombre">@productoRow.Nombre</MudTd>
                         <MudTd DataLabel="Categoria">@productoRow.DescripcionCategoria</MudTd>
                         <MudTd DataLabel="Stock">@productoRow.Stock</MudTd>
-                        <MudTd DataLabel="Precio">@productoRow.Precio</MudTd>
-                        <MudTd DataLabel="Precio Venta">@productoRow.PrecioVenta</MudTd>
+                        <MudTd DataLabel="Precio">@productoRow.PrecioCompra</MudTd>
+                        <MudTd DataLabel="Precio Venta">@productoRow.Precio</MudTd>
                         <MudTd DataLabel="Ganancia">@productoRow.Ganancia</MudTd>
+                        <MudTd DataLabel="Características">@productoRow.Caracteristicas</MudTd>
+                        <MudTd DataLabel="Detalles">@productoRow.Detalle</MudTd>
+                        <MudTd DataLabel="Stock mínimo">@productoRow.StockMinimo</MudTd>
                         <MudTd DataLabel="">
                             <MudFab Color="Color.Primary"
                                     StartIcon="@Icons.Material.Filled.Edit"

@@ -20,6 +20,9 @@ namespace FerreteriaSur.Shared
         public decimal? PrecioCompra { get; set; }  // Nuevo campo        
         public int? IdUnidad { get; set; }  // Nuevo campo
 
+        public bool? EsActivo {
+            get { return EsActivo = true; } set { } }
+
         public decimal? Ganancia { get { return Precio - PrecioCompra; } set { } }
 
         public decimal? PrecioVenta { get { return PrecioVenta = Precio; } set { } }  // Nuevo campo
