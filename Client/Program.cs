@@ -19,7 +19,6 @@ builder.Services.AddScoped<IRolService, RolService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IDashBoardService, DashBoardService>();
-builder.Services.AddScoped<IUnidadMedidaService, UnidadMedidaService>();
 
 builder.Services.AddMudServices();
 builder.Services.AddSweetAlert2();

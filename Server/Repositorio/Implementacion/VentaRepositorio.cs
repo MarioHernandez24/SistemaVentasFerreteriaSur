@@ -99,8 +99,8 @@ namespace FerreteriaSur.Server.Repositorio.Implementacion
         public async Task<List<DetalleVenta>> Reporte(string FechaInicio, string FechaFin)
         {
 
-            DateTime fech_Inicio = DateTime.ParseExact(FechaInicio, "dd/MM/yyyy", new CultureInfo("es-PE"));
-            DateTime fech_Fin = DateTime.ParseExact(FechaFin, "dd/MM/yyyy", new CultureInfo("es-PE"));
+            DateTime fech_Inicio = DateTime.ParseExact(FechaInicio, "dd/MM/yyyy", new CultureInfo("es-NI"));
+            DateTime fech_Fin = DateTime.ParseExact(FechaFin, "dd/MM/yyyy", new CultureInfo("es-NI"));
 
             List<DetalleVenta> listaResumen = await _dbcontext.DetalleVenta
                 .Include(p => p.IdProductoNavigation)
