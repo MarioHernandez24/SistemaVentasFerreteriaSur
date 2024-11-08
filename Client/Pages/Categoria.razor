@@ -43,11 +43,11 @@
                                     Size="Size.Small"
                                     IconSize="Size.Small"
                                     OnClick="@(() => AbrirEditarCategoria(categoriaRow))" />
-                            @*<MudFab Color="Color.Error"
+                            <MudFab Color="Color.Error"
                                     StartIcon="@Icons.Material.Filled.Delete"
                                     Size="Size.Small"
                                     IconSize="Size.Small"
-                                    OnClick="@(() => EliminarUsuario(categoriaRow))" />*@
+                                    OnClick="@(() => EliminarCategoria(categoriaRow))" />
                         </MudTd>
                     </RowTemplate>
                     <PagerContent>
@@ -100,7 +100,7 @@
 
     private async Task AbrirNuevaCategoria()
     {
-        var dialogo = _dialogServicio.Show<MdProducto>("Nueva categoria");
+        var dialogo = _dialogServicio.Show<MdCategoria>("Nueva categoria");
         var resultado = await dialogo.Result;
 
         if (!resultado.Canceled)
@@ -113,7 +113,7 @@
     {
         var parametros = new DialogParameters { ["_categoria"] = model };
 
-        var dialogo = _dialogServicio.Show<MdProducto>("Editar categoria", parametros);
+        var dialogo = _dialogServicio.Show<MdCategoria>("Editar categoria", parametros);
         var resultado = await dialogo.Result;
 
         if (!resultado.Canceled)
@@ -122,30 +122,30 @@
         }
     }
 
-    //private async Task EliminarUsuario(CategoriaDTO model)
-    //{
-    //    SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
-    //        {
-    //            Title = "Esta seguro?",
-    //            Text = $"Eliminar categoria: {model.NombreCategoria}",
-    //            Icon = SweetAlertIcon.Warning,
-    //            ShowCancelButton = true,
-    //            ConfirmButtonText = "Si, eliminar",
-    //            CancelButtonText = "No, volver"
-    //        });
+    private async Task EliminarCategoria(CategoriaDTO model)
+    {
+        SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Esta seguro?",
+                Text = $"Eliminar categoria: {model.NombreCategoria}",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si, eliminar",
+                CancelButtonText = "No, volver"
+            });
 
-    //    if (result.IsConfirmed)
-    //    {
-    //        var resultado = await _categoriaServicio.Eliminar(model.IdProducto);
+        if (result.IsConfirmed)
+        {
+            var resultado = await _categoriaServicio.Eliminar(model.IdCategoria);
 
-    //        if (resultado)
-    //        {
-    //            _snackBar.Add("El producto fue eliminado", Severity.Success, a => a.VisibleStateDuration = 500);
-    //            await ObtenerCategorias();
-    //        }
-    //        else
-    //            _snackBar.Add("No se pudo eliminar", Severity.Error, a => a.VisibleStateDuration = 500);
-    //    }
-    //}
+            if (resultado)
+            {
+                _snackBar.Add("La categoria fue eliminada", Severity.Success, a => a.VisibleStateDuration = 500);
+                await ObtenerCategorias();
+            }
+            else
+                _snackBar.Add("No se pudo eliminar", Severity.Error, a => a.VisibleStateDuration = 500);
+        }
+    }
 
 }

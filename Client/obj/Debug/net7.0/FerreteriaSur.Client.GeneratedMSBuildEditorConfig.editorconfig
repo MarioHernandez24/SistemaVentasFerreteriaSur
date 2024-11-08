@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSGlzdG9yaWFsVmVudGEucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/Modales/MdCategoria.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kYWxlc1xNZENhdGVnb3JpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/Modales/MdDetalleVenta.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kYWxlc1xNZERldGFsbGVWZW50YS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
