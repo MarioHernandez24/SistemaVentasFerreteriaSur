@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FerreteriaSur.Shared
 {
-    public class CategoriaDTO
+    public class UnidadDTO
     {
-        public int IdCategoria { get; set; }
-        public string? NombreCategoria { get; set; }
+        public int IdUnidad { get; set; }
+        public string? Nombre { get; set; }
 
-        public DateTime? FechaRegistro { get; set; }
+        public string? Simbolo { get; set; }
         public bool EsActivo
         {
             get { return EsActivo = true; }
@@ -20,13 +20,13 @@ namespace FerreteriaSur.Shared
 
         public override bool Equals(object o)
         {
-            var other = o as CategoriaDTO;
-            return other?.IdCategoria == IdCategoria;
+            var other = o as UnidadDTO;
+            return other?.IdUnidad == IdUnidad;
         }
-        public override int GetHashCode() => IdCategoria.GetHashCode();
+        public override int GetHashCode() => IdUnidad.GetHashCode();
         public override string ToString()
         {
-            return NombreCategoria;
+            return Nombre;
         }
     }
 }
