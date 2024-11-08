@@ -248,7 +248,7 @@ public partial class DbventaBlazorContext : DbContext
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
-                .HasColumnName("fechaRegistro");
+                .HasColumnName("fechaCreacion");
         });
 
         OnModelCreatingPartial(modelBuilder);

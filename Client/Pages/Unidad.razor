@@ -1,0 +1,159 @@
+﻿@page "/page/unidad"
+@inject IUnidadService _unidadServicio
+@inject IDialogService _dialogServicio
+@inject ISnackbar _snackBar
+@inject SweetAlertService Swal;
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-5">
+
+    <MudText Typo="Typo.h5" GutterBottom="true">Unidad de medida</MudText>
+
+    <MudPaper Elevation="3" Class="pa-4" Width="100%">
+        <MudGrid>
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Add"
+                           Color="Color.Primary"
+                           OnClick="AbrirNuevaUnidad">
+                    Nueva categoria
+                </MudButton>
+            </MudItem>
+            <MudItem xs="12">
+
+                <MudTable Items="@listaUnidad"
+                          Striped="true" Bordered="true" Dense="true"
+                          Filter="new Func<UnidadDTO,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1"
+                          Loading="@_loading" LoadingProgressColor="Color.Info">
+                    <ToolBarContent>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="searchString1" Placeholder="Buscar" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh>Nombre</MudTh>
+                        <MudTh>Símbolo</MudTh>
+                        <MudTh>Descripción</MudTh>
+                        <MudTh>Fecha creación</MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="unidadRow">
+                        <MudTd DataLabel="Nombre">@unidadRow.Nombre</MudTd>
+                        <MudTd DataLabel="Símbolo">@unidadRow.Simbolo</MudTd>
+                        <MudTd DataLabel="Descripción">@unidadRow.Descripcion</MudTd>
+                        <MudTd DataLabel="Fecha creación">@unidadRow.FechaCreacion?.ToString("d")</MudTd>
+
+                        <MudTd DataLabel="">
+                            <MudFab Color="Color.Primary"
+                                    StartIcon="@Icons.Material.Filled.Edit"
+                                    Size="Size.Small"
+                                    IconSize="Size.Small"
+                                    OnClick="@(() => AbrirEditarUnidad(unidadRow))" />
+                            <MudFab Color="Color.Error"
+                                    StartIcon="@Icons.Material.Filled.Delete"
+                                    Size="Size.Small"
+                                    IconSize="Size.Small"
+                                    OnClick="@(() => EliminarUnidad(unidadRow))" />
+                        </MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+
+
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    List<UnidadDTO> listaUnidad = new List<UnidadDTO>();
+    private string searchString1 = "";
+    private UnidadDTO selectedItem1 = null;
+    private bool _loading = true;
+
+    private async Task ObtenerUnidad()
+    {
+        var result = await _unidadServicio.Lista();
+
+        if (result.status)
+        {
+            listaUnidad = (List<UnidadDTO>)result.value!;
+        }
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ObtenerUnidad();
+        _loading = false;
+    }
+
+    private bool FilterFunc1(UnidadDTO element) => FilterFunc(element, searchString1);
+
+    private bool FilterFunc(UnidadDTO element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Nombre.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.Simbolo.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+
+    private async Task AbrirNuevaUnidad()
+    {
+        var dialogo = _dialogServicio.Show<MdCategoria>("Nueva unidad de medida");
+        var resultado = await dialogo.Result;
+
+        if (!resultado.Canceled)
+        {
+            await ObtenerUnidad();
+        }
+    }
+
+    private async Task AbrirEditarUnidad(UnidadDTO model)
+    {
+        var parametros = new DialogParameters { ["_unidad"] = model }; // Pasa la unidad seleccionada
+
+        var dialogo = _dialogServicio.Show<MdCategoria>("Editar unidad", parametros);
+        var resultado = await dialogo.Result;
+
+        if (!resultado.Canceled)
+        {
+            await ObtenerUnidad();
+        }
+    }
+
+
+
+    private async Task EliminarUnidad(UnidadDTO model)
+    {
+        SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Esta seguro?",
+                Text = $"Eliminar unidad: {model.Nombre}",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si, eliminar",
+                CancelButtonText = "No, volver"
+            });
+
+        if (result.IsConfirmed)
+        {
+            var resultado = await _unidadServicio.Eliminar(model.IdUnidad);
+
+            if (resultado)
+            {
+                _snackBar.Add("La unidad fue eliminada", Severity.Success, a => a.VisibleStateDuration = 500);
+                await ObtenerUnidad();
+            }
+            else
+                _snackBar.Add("No se pudo eliminar", Severity.Error, a => a.VisibleStateDuration = 500);
+        }
+    }
+
+}

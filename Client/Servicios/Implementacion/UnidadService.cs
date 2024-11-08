@@ -13,7 +13,7 @@ namespace FerreteriaSur.Client.Servicios.Implementacion
             _http = http;
         }
         public async Task<ResponseDTO<List<UnidadDTO>>> Lista()
-        {
+        { 
             var result = await _http.GetFromJsonAsync<ResponseDTO<List<UnidadDTO>>>("api/unidad/Lista");
             return result;
         }

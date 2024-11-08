@@ -37,6 +37,11 @@ namespace FerreteriaSur.Server.Utilidades
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();
             #endregion Categoria
 
+            #region Unidad
+            CreateMap<Unidad, UnidadDTO>().ReverseMap();
+            #endregion Unidad
+
+
             #region Producto
             CreateMap<Producto, ProductoDTO>()
             .ForMember(destino =>

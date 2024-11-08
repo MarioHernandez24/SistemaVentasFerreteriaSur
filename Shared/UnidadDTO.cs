@@ -18,6 +18,9 @@ namespace FerreteriaSur.Shared
             set { }
         }
 
+        public string? Descripcion { get; set; }
+        public DateTime? FechaCreacion { get; set; }
+
         public override bool Equals(object o)
         {
             var other = o as UnidadDTO;

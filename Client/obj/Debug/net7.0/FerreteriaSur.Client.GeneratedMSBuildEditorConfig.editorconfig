@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/Unidad.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVW5pZGFkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ender/source/repos/FerreteriaSur/Client/Pages/Usuario.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXN1YXJpby5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
