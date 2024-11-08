@@ -30,6 +30,8 @@ public partial class DbventaBlazorContext : DbContext
 
     public virtual DbSet<Venta> Venta { get; set; }
 
+    public virtual DbSet<Unidad> Unidad { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -152,6 +154,10 @@ public partial class DbventaBlazorContext : DbContext
             entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Productos)
                 .HasForeignKey(d => d.IdCategoria)
                 .HasConstraintName("FK__Producto__idCate__1920BF5C");
+
+            entity.HasOne(d => d.IdUnidadNavigation).WithMany(p => p.Productos)
+                .HasForeignKey(d => d.IdUnidad)
+                .HasConstraintName("FK__Producto__idUnid__1920BF5C");
         });
 
         modelBuilder.Entity<Rol>(entity =>
@@ -219,6 +225,30 @@ public partial class DbventaBlazorContext : DbContext
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");
+        });
+
+        modelBuilder.Entity<Unidad>(entity =>
+        {
+            entity.HasKey(e => e.IdUnidad).HasName("PK__Undiad__8A3D240C1FC10DD9");
+
+            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Simbolo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("simbolo");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
         });
 
         OnModelCreatingPartial(modelBuilder);
