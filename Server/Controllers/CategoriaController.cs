@@ -85,7 +85,10 @@ namespace FerreteriaSur.Server.Controllers
                 if (_categoriaParaEditar != null)
                 {
 
-                    _categoriaParaEditar.NombreCategoria = _categoriaParaEditar.NombreCategoria;                   
+                    //_categoriaParaEditar.NombreCategoria = _categoriaParaEditar.NombreCategoria;
+
+                    _categoriaParaEditar.NombreCategoria = _categoria.NombreCategoria;
+
 
                     bool respuesta = await _categoriaRepositorio.Editar(_categoriaParaEditar);
 

@@ -5,47 +5,37 @@
 
     <DialogContent>
         <MudContainer Style="max-height: 400px; overflow-y: scroll" Class="m-0 p-0">
-
-            <EditForm Model="@_categoria">
-
-                <MudTextField @bind-Value="@_categoria.NombreCategoria" Class="mb-3"
-                              Label="Nombre" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Badge" />                               
+            <EditForm Model="@categoriaEditada">
+                <MudTextField @bind-Value="categoriaEditada.NombreCategoria" Class="mb-3"
+                              Label="Nombre" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Badge" />
             </EditForm>
-
         </MudContainer>
-
     </DialogContent>
+
     <DialogActions>
         <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">Cancelar</MudButton>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Guardar">Guardar</MudButton>
     </DialogActions>
+
 </MudDialog>
 
 @code {
     [Parameter]
     public CategoriaDTO _categoria { get; set; } = new CategoriaDTO();
-    private MudTextField<string> multilineReference;
 
-    List<CategoriaDTO> listaCategoria = new List<CategoriaDTO>();
-    public CategoriaDTO categoriaSeleccionado;
-
+    private CategoriaDTO categoriaEditada; // Esta es la copia que editaremos
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
-    
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var resultado = await _categoriaServicio.Lista();
-
-        if (resultado.status)
-        {
-            listaCategoria = resultado.value!;
-            if (_categoria.IdCategoria != 0)
-                categoriaSeleccionado = listaCategoria.FirstOrDefault(p => p.IdCategoria == _categoria.IdCategoria)!;
-            else
-                categoriaSeleccionado = listaCategoria.First();
-        }        
+        // Crea una copia de la categoría original
+        categoriaEditada = new CategoriaDTO
+            {
+                IdCategoria = _categoria.IdCategoria,
+                NombreCategoria = _categoria.NombreCategoria
+            };
     }
 
     private void Cancel()
@@ -55,32 +45,30 @@
 
     private async Task Guardar()
     {
-        if (_categoria.IdCategoria == 0) // Nueva categoría
+        string _mensaje = "";
+        bool _resultado;
+
+        if (categoriaEditada.IdCategoria == 0) // Nueva categoría
         {
-            var response = await _categoriaServicio.Crear(_categoria);
-            if (response.status)
-            {
-                _snackBar.Add("Categoria fue creada", Severity.Success, a => a.VisibleStateDuration = 500);
-                MudDialog.Close(DialogResult.Ok(true));
-            }
-            else
-            {
-                _snackBar.Add("Error al guardar la categoría", Severity.Error, a => a.VisibleStateDuration = 500);
-            }
+            var response = await _categoriaServicio.Crear(categoriaEditada);
+            _resultado = response.status;
+            _mensaje = "Categoria fue creada";
         }
-        else // Editando una categoría
+        else // Edición de una categoría existente
         {
-            var resultado = await _categoriaServicio.Editar(_categoria);
-            if (resultado)
-            {
-                _snackBar.Add("Categoria fue modificada", Severity.Success, a => a.VisibleStateDuration = 500);
-                MudDialog.Close(DialogResult.Ok(true));
-            }
-            else
-            {
-                _snackBar.Add("Error al guardar los cambios", Severity.Error, a => a.VisibleStateDuration = 500);
-            }
+            categoriaEditada.IdCategoria = _categoria.IdCategoria; // Asegura que el Id esté correcto
+            _resultado = await _categoriaServicio.Editar(categoriaEditada);
+            _mensaje = "Categoria fue modificada";
+        }
+
+        if (_resultado)
+        {
+            _snackBar.Add(_mensaje, Severity.Success, a => a.VisibleStateDuration = 500);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        else
+        {
+            _snackBar.Add("Error al guardar cambios", Severity.Error, a => a.VisibleStateDuration = 500);
         }
     }
-
 }

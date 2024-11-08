@@ -111,7 +111,7 @@
 
     private async Task AbrirEditarCategoria(CategoriaDTO model)
     {
-        var parametros = new DialogParameters { ["_categoria"] = model };
+        var parametros = new DialogParameters { ["_categoria"] = model }; // Pasa la categoría seleccionada
 
         var dialogo = _dialogServicio.Show<MdCategoria>("Editar categoria", parametros);
         var resultado = await dialogo.Result;
@@ -121,6 +121,8 @@
             await ObtenerCategorias();
         }
     }
+
+
 
     private async Task EliminarCategoria(CategoriaDTO model)
     {
