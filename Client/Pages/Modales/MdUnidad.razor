@@ -1,13 +1,17 @@
-﻿@inject ICategoriaService _categoriaServicio
+﻿@inject IUnidadService _unidadServicio
 @inject ISnackbar _snackBar
 
 <MudDialog Style="width:400px">
 
     <DialogContent>
         <MudContainer Style="max-height: 400px; overflow-y: scroll" Class="m-0 p-0">
-            <EditForm Model="@categoriaEditada">
-                <MudTextField @bind-Value="categoriaEditada.NombreCategoria" Class="mb-3"
+            <EditForm Model="@unidadEditada">
+                <MudTextField @bind-Value="unidadEditada.Nombre" Class="mb-3"
                               Label="Nombre" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Badge" />
+                <MudTextField @bind-Value="unidadEditada.Simbolo" Class="mb-3"
+                              Label="S[imbolo" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Badge" />
+                <MudTextField @bind-Value="unidadEditada.Descripcion" Class="mb-3"
+                              Label="Descripción" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Badge" />
             </EditForm>
         </MudContainer>
     </DialogContent>
@@ -21,9 +25,9 @@
 
 @code {
     [Parameter]
-    public CategoriaDTO _categoria { get; set; } = new CategoriaDTO();
+    public UnidadDTO _unidad { get; set; } = new UnidadDTO();
 
-    private CategoriaDTO categoriaEditada; // Esta es la copia que editaremos
+    private UnidadDTO unidadEditada; // Esta es la copia que editaremos
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -31,10 +35,12 @@
     protected override void OnInitialized()
     {
         // Crea una copia de la categoría original
-        categoriaEditada = new CategoriaDTO
+        unidadEditada = new UnidadDTO
             {
-                //IdCategoria = _categoria.IdCategoria,
-                NombreCategoria = _categoria.NombreCategoria
+                IdUnidad = _unidad.IdUnidad,
+                Nombre = _unidad.Nombre,
+                Simbolo = _unidad.Simbolo, 
+                Descripcion = _unidad.Descripcion,                
             };
     }
 
@@ -48,17 +54,17 @@
         string _mensaje = "";
         bool _resultado;
 
-        if (categoriaEditada.IdCategoria == 0) // Nueva categoría
+        if (unidadEditada.IdUnidad == 0) // Nueva categoría
         {
-            var response = await _categoriaServicio.Crear(categoriaEditada);
+            var response = await _unidadServicio.Crear(unidadEditada);
             _resultado = response.status;
-            _mensaje = "Categoria fue creada";
+            _mensaje = "Unidad fue creada";
         }
         else // Edición de una categoría existente
         {
-            categoriaEditada.IdCategoria = _categoria.IdCategoria; // Asegura que el Id esté correcto
-            _resultado = await _categoriaServicio.Editar(categoriaEditada);
-            _mensaje = "Categoria fue modificada";
+            unidadEditada.IdUnidad = _unidad.IdUnidad; // Asegura que el Id esté correcto
+            _resultado = await _unidadServicio.Editar(unidadEditada);
+            _mensaje = "Unidad fue modificada";
         }
 
         if (_resultado)
@@ -71,4 +77,5 @@
             _snackBar.Add("Error al guardar cambios", Severity.Error, a => a.VisibleStateDuration = 500);
         }
     }
+
 }

@@ -47,30 +47,37 @@ namespace FerreteriaSur.Server.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Guardar")]
-        public async Task<IActionResult> Guardar([FromBody] UnidadDTO request)
-        {
-            ResponseDTO<UnidadDTO> _ResponseDTO = new ResponseDTO<UnidadDTO>();
-            try
+            [HttpPost]
+            [Route("Guardar")]
+            public async Task<IActionResult> Guardar([FromBody] UnidadDTO request)
             {
-                Unidad _unidad = _mapper.Map<Unidad>(request);
+                ResponseDTO<UnidadDTO> _ResponseDTO = new ResponseDTO<UnidadDTO>();
+                try
+                {
+                    Unidad _unidad = _mapper.Map<Unidad>(request);
 
-                Unidad _unidadCreada = await _unidadRepositorio.Crear(_unidad);
+                    Unidad _unidadCreada = await _unidadRepositorio.Crear(_unidad);
 
-                if (_unidadCreada.IdUnidad != 0)
-                    _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = true, msg = "ok", value = _mapper.Map<UnidadDTO>(_unidadCreada) };
-                else
-                    _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = false, msg = "No se pudo crear la categoria" };
+                    if (_unidadCreada.IdUnidad != 0)
+                        _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = true, msg = "ok", value = _mapper.Map<UnidadDTO>(_unidadCreada) };
+                    else
+                        _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = false, msg = "No se pudo crear la unidad" };
 
-                return StatusCode(StatusCodes.Status200OK, _ResponseDTO);
+                    return StatusCode(StatusCodes.Status200OK, _ResponseDTO);
+                }
+                catch (Exception ex)
+                {
+                    // Incluye la InnerException para obtener más detalles sobre el error
+                    var errorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                    _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = false, msg = errorMessage };
+
+                    // También puedes registrar el error completo para depuración
+                    Console.WriteLine($"Error al guardar unidad: {ex}");
+
+                    return StatusCode(StatusCodes.Status500InternalServerError, _ResponseDTO);
+                }
             }
-            catch (Exception ex)
-            {
-                _ResponseDTO = new ResponseDTO<UnidadDTO>() { status = false, msg = ex.Message };
-                return StatusCode(StatusCodes.Status500InternalServerError, _ResponseDTO);
-            }
-        }
+
 
         [HttpPut]
         [Route("Editar")]

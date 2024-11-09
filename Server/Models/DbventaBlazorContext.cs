@@ -129,13 +129,7 @@ public partial class DbventaBlazorContext : DbContext
 
             entity.Property(e => e.Ganancia)
                 .HasColumnType("decimal(10, 2)")
-                .HasColumnName("ganancia");
-
-            //entity.Property(e => e.Ganancia)
-            //.HasColumnType("decimal(10, 2)")
-            //.HasColumnName("ganancia")
-            //.HasComputedColumnSql("[precio] - [precioCompra]");
-
+                .HasColumnName("ganancia");           
 
             entity.Property(e => e.PrecioCompra)
                 .HasColumnType("decimal(10, 2)")
@@ -229,9 +223,13 @@ public partial class DbventaBlazorContext : DbContext
 
         modelBuilder.Entity<Unidad>(entity =>
         {
-            entity.HasKey(e => e.IdUnidad).HasName("PK__Undiad__8A3D240C1FC10DD9");
+            entity.HasKey(e => e.IdUnidad).HasName("PK__Unidad__8A3D240C1FC10DD910");
 
-            entity.Property(e => e.IdUnidad).HasColumnName("idUnidad");
+            entity.ToTable("Unidad");
+
+            entity.Property(e => e.IdUnidad)
+                .HasColumnName("idUnidad")
+                .ValueGeneratedOnAdd();  // Asegura que IdUnidad se genere automáticamente
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -244,12 +242,15 @@ public partial class DbventaBlazorContext : DbContext
                 .HasMaxLength(300)
                 .IsUnicode(false)
                 .HasColumnName("descripcion");
-            entity.Property(e => e.EsActivo).HasColumnName("esActivo");
+            entity.Property(e => e.EsActivo)
+                .HasColumnName("esActivo");
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("fechaCreacion");
         });
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

@@ -12,11 +12,7 @@ namespace FerreteriaSur.Shared
         public string? NombreCategoria { get; set; }
 
         public DateTime? FechaRegistro { get; set; }
-        public bool EsActivo
-        {
-            get { return EsActivo = true; }
-            set { }
-        }
+        //public bool EsActivo { get; set; } = true;
 
         public override bool Equals(object o)
         {
